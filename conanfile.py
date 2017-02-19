@@ -10,8 +10,12 @@ class LibuvConan(ConanFile):
     author = "Kyle Downey"
     url = "https://github.com/kyle-downey/conan-libuv"
 
-    settings = "os", "compiler", "build_type", "arch"
-
+    settings = {
+        "os": ["Linux", "Macos"],
+        "compiler": None,
+        "build_type": None,
+        "arch": None
+    }
 
     def source(self):
         tools.download("http://dist.libuv.org/dist/v1.9.1/libuv-v1.9.1.tar.gz", "libuv.tgz")
