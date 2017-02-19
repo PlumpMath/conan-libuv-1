@@ -4,9 +4,14 @@ import os
 
 class LibuvConan(ConanFile):
     name = "LibUV"
+    description = "LibUV asynchronous I/O framework"
     version = "1.9.1"
+    license = "Apache Software License 2.0"
+    author = "Kyle Downey"
+    url = "https://github.com/kyle-downey/conan-libuv"
+
     settings = "os", "compiler", "build_type", "arch"
-    # No exports necessary
+
 
     def source(self):
         tools.download("http://dist.libuv.org/dist/v1.9.1/libuv-v1.9.1.tar.gz", "libuv.tgz")
@@ -33,9 +38,8 @@ class LibuvConan(ConanFile):
         self.run("cd libuv-v1.9.1 && make -j %s" % concurrency)
 
     def package(self):
-        self.copy("*.h", dst="include", src="hello")
-        self.copy("*.lib", dst="lib", src="lib")
-        self.copy("*.a", dst="lib", src="lib")
+        self.copy("*.h", dst="include", src="libuv-v1.9.1/include")
+        self.copy("*.*", dst="lib", src="libuv-v1.9.1/.libs")
 
     def package_info(self):
         self.cpp_info.libs = ["uv"]
