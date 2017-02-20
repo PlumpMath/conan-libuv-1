@@ -39,7 +39,11 @@ class LibuvConan(ConanFile):
 
         self.run("chmod +x libuv-v1.9.1/configure")
         self.run("cd libuv-v1.9.1 && %s ./configure %s" % (env.command_line, ' '.join(args)))
-        self.run("cd libuv-v1.9.1 && make -j %s" % concurrency)
+
+        cppflags = ""
+        if self.settings.os == "Linux":
+            cppflags = "CPPFLAGS=-fPIC "
+        self.run("cd libuv-v1.9.1 && make " + cppflags + "-j %s" % concurrency)
 
     def package(self):
         self.copy("*.h", dst="include", src="libuv-v1.9.1/include", keep_path=False)
