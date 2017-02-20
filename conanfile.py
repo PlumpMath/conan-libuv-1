@@ -42,8 +42,8 @@ class LibuvConan(ConanFile):
         self.run("cd libuv-v1.9.1 && make -j %s" % concurrency)
 
     def package(self):
-        self.copy("*.h", dst="include", src="libuv-v1.9.1/include")
-        self.copy("*.*", dst="lib", src="libuv-v1.9.1/.libs")
+        self.copy("*.h", dst="include", src="libuv-v1.9.1/include", keep_path=False)
+        self.copy("*.*", dst="lib", src="libuv-v1.9.1/.libs", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["uv"]
