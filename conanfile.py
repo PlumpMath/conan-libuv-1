@@ -1,4 +1,5 @@
 from conans import ConanFile, tools, ConfigureEnvironment
+from conans.tools import replace_in_file
 import os
 
 
@@ -34,6 +35,11 @@ class LibuvConan(ConanFile):
 
         self.run("chmod +x libuv-v1.9.1/autogen.sh")
         self.run("cd libuv-v1.9.1 && ./autogen.sh")
+
+        if self.settings.os == "Macos":
+            old_str = '-install_name \$rpath/\$soname'
+            new_str = '-install_name \$soname'
+            replace_in_file("./libuv-v1.9.1/configure", old_str, new_str)
 
         args = []
 
